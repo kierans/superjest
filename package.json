@@ -1,0 +1,22 @@
+{
+  "name": "superjest",
+  "version": "0.1.0",
+  "description": "A set of Hamjest matchers for user with superagent",
+  "main": "src/matchers.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "keywords": [
+    "hamjest",
+    "http",
+    "request",
+    "vendor",
+    "supertest",
+    "test"
+  ],
+  "author": "Kieran Simpson",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^6.1.4"
+  }
+}
