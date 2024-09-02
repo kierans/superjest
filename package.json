@@ -4,8 +4,9 @@
   "description": "A set of Hamjest matchers for user with superagent",
   "main": "src/matchers.js",
   "scripts": {
+    "prepack": "node readme.js",
     "test": "mocha test",
-    "prepack": "node readme.js"
+    "types": "tsc -d --declarationDir src --allowJs --emitDeclarationOnly src/matchers.js"
   },
   "keywords": [
     "hamjest",
@@ -34,7 +35,8 @@
     "hamjest": "^4.1.0",
     "mocha": "^10.7.3",
     "nock": "^13.5.5",
-    "superagent": "^10.1.0"
+    "superagent": "^10.1.0",
+    "typescript": "^5.5.4"
   },
   "dependencies": {
     "charset": "^1.0.1"
