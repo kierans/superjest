@@ -52,6 +52,17 @@ assertThat(resp, hasHeader('etag'));
 assertThat(resp, hasHeader('content-type', equalTo('text/plain')));
 ```
 
+### hasBody
+
+* **@param** _{Matcher}_ matcher 
+
+Assert that the response has the correct body. Relies on a `body` property being present
+on the response object.
+
+```js
+assertThat(resp, hasBody(equalTo("Hello World")));
+```
+
 ### hasContentType
 
 * **@param** _{Matcher}_ matcher 
