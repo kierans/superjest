@@ -2,9 +2,20 @@
 
 // noinspection NpmUsedModulesInstalled
 const AssertionError = require("assertion-error");
-const { assertThat, equalTo, instanceOf, throws } = require("hamjest");
-const { hasCharset, hasContentLength, hasContentType, hasLocation, hasStatusCode, hasHeader,
-		isRedirectedTo, html, json, text } = require("../src/matchers");
+const { assertThat, equalTo, instanceOf, throws, hasProperties } = require("hamjest");
+const {
+	hasBody,
+	hasCharset,
+	hasContentLength,
+	hasContentType,
+	hasLocation,
+	hasStatusCode,
+	hasHeader,
+	isRedirectedTo,
+	html,
+	json,
+	text,
+} = require("../src/matchers");
 
 describe("matchers", function() {
 	let resp;
@@ -15,6 +26,9 @@ describe("matchers", function() {
 			headers: {
 				"content-type": "application/json",
 				"content-length": 12
+			},
+			body: {
+				name: "Bruce Wayne"
 			}
 		}
 	});
@@ -45,13 +59,15 @@ describe("matchers", function() {
 		it("should fail when no content type header", function() {
 			delete resp.headers["content-type"];
 
-			const fn = () => { assertThat(resp, hasContentType(equalTo(json()))); };
+			const fn = () => {
+				assertThat(resp, hasContentType(equalTo(json())));
+			};
 
 			assertThat(fn, throws(instanceOf(AssertionError)));
 		});
 
 		Object.keys(types).sort().forEach((type) => {
-			it(`matches ${type} content type`, function () {
+			it(`matches ${type} content type`, function() {
 				const matcher = types[type];
 
 				// include the charset so that we avoid making mistakes matching the header
@@ -81,12 +97,14 @@ describe("matchers", function() {
 		it("should fail when no content length header", function() {
 			delete resp.headers["content-length"];
 
-			const fn = () => { assertThat(resp, hasContentLength(equalTo(contentLength))); };
+			const fn = () => {
+				assertThat(resp, hasContentLength(equalTo(contentLength)));
+			};
 
 			assertThat(fn, throws(instanceOf(AssertionError)));
 		});
 
-		it("matches content length", function () {
+		it("matches content length", function() {
 			assertThat(resp, hasContentLength(equalTo(contentLength)));
 		});
 	});
@@ -104,17 +122,27 @@ describe("matchers", function() {
 		it("should fail when no location header", function() {
 			delete resp.headers["location"];
 
-			const fn = () => { assertThat(resp, hasLocation(equalTo(location))); };
+			const fn = () => {
+				assertThat(resp, hasLocation(equalTo(location)));
+			};
 
 			assertThat(fn, throws(instanceOf(AssertionError)));
 		});
 
-		it("matches location", function () {
+		it("matches location", function() {
 			assertThat(resp, hasLocation(equalTo(location)));
 		});
 
-		it("checks redirection", function () {
+		it("checks redirection", function() {
 			assertThat(resp, isRedirectedTo(location));
+		});
+	});
+
+	describe("body", function() {
+		it("matches body", function() {
+			assertThat(resp, hasBody(hasProperties({
+				name: equalTo("Bruce Wayne")
+			})));
 		});
 	});
 });

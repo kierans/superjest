@@ -80,6 +80,35 @@ exports.hasHeader = function(name, matcher) {
 };
 
 /**
+ * ### hasBody
+ *
+ * Assert that the response has the correct body. Relies on a `body` property being present
+ * on the response object.
+ *
+ * ```js
+ * assertThat(resp, hasBody(equalTo("Hello World")));
+ * ```
+ *
+ * @param {Matcher} matcher
+ * @returns {Matcher}
+ */
+exports.hasBody = function(matcher) {
+	return {
+		matches: (resp) => {
+			return matcher.matches(resp.body);
+		},
+		describeTo: (description) => {
+			description.append(`A response with body `);
+			matcher.describeTo(description);
+		},
+		describeMismatch: (resp, description) => {
+			description.append("A response with body ");
+			description.appendValue(resp.body);
+		}
+	};
+}
+
+/**
  * ### hasContentType
  *
  * Assert that the response has the correct content type header.

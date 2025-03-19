@@ -3,6 +3,7 @@ export function hasHeader(name: string, matcher?: Matcher): Matcher;
 export function hasContentType(matcher: Matcher): Matcher;
 export function hasCharset(matcher: Matcher): Matcher;
 export function hasContentLength(matcher: Matcher): Matcher;
+export function hasBody(matcher: Matcher): Matcher;
 export function hasLocation(matcher: Matcher): Matcher;
 export function isRedirectedTo(location: string): Matcher;
 export function html(): string;
